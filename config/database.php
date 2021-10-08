@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'mongodb'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'prefix_indexes' => true,
-            'strict' => true,
+            'strict' => false,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
@@ -69,7 +69,8 @@ return [
             'database' => env('MONGO_DB_DATABASE'),
             'username' => env('MONGO_DB_USERNAME'),
             'password' => env('MONGO_DB_PASSWORD'),
-            'options'  => []
+            'options'  => [],
+            'strict' => true
         ],
         'pgsql' => [
             'driver' => 'pgsql',

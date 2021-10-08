@@ -1,11 +1,14 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+//use Illuminate\Database\Schema\Blueprint;
+use Jenssegers\Mongodb\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreatePersonalAccessTokensTable extends Migration
 {
+    protected $connection = 'mongodb';
+
     /**
      * Run the migrations.
      *
@@ -13,14 +16,14 @@ class CreatePersonalAccessTokensTable extends Migration
      */
     public function up()
     {
-        Schema::create('personal_access_tokens', function (Blueprint $table) {
-            $table->id();
-            $table->morphs('tokenable');
-            $table->string('name');
-            $table->string('token', 64)->unique();
-            $table->text('abilities')->nullable();
-            $table->timestamp('last_used_at')->nullable();
-            $table->timestamps();
+        Schema::connection($this->connection)->create('personal_access_tokens', function (Blueprint $collection) {
+            $collection->bigIncrements('id');
+            $collection->morphs('tokenable');
+            $collection->string('name');
+            $collection->string('token', 64)->unique();
+            $collection->text('abilities')->nullable();
+            $collection->timestamp('last_used_at')->nullable();
+            $collection->timestamps();
         });
     }
 
@@ -31,6 +34,6 @@ class CreatePersonalAccessTokensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personal_access_tokens');
+        Schema::connection($this->connection)->dropIfExists('personal_access_tokens');
     }
 }
