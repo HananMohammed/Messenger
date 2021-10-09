@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
     {
         Schema::connection($this->connection)->create('users', function (Blueprint $collection) {
             $collection->id();
+            $collection->increments('user_id')->startingValue(1);
             $collection->string('name');
             $collection->string('email')->unique();
             $collection->timestamp('email_verified_at')->nullable();
